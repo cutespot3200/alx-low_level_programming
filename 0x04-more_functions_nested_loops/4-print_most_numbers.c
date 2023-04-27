@@ -1,20 +1,22 @@
+/*
+ * File: 4-print_most_numbers.c
+ * Auth: Motunrayo I Sanni
+ */
+
 #include "main.h"
+
 /**
-*print_most_numbers - prints numbers except 2 and 4
-*
-*Return: returns nothing
-*/
+ * print_most_numbers - Prints the numbers from 0-9 except for 2 and 4.
+ */
 void print_most_numbers(void)
 {
-int i, j;
-	for (i = 1; i <= 10; i++)
+	int num;
+
+	for (num = 0; num <= 9; num++)
 	{
-		for (j = 0; j <= 14; j++)
-		{
-			if (j >= 10)
-				_putchar('1');
-				_putchar(j % 10 + '0');
-		}
-			_putchar('\n');
-		}
+		if (num != 2 && num != 4)
+			_putchar((num % 10) + '0');
+	}
+
+	_putchar('\n');
 }
