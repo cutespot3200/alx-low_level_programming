@@ -1,75 +1,82 @@
 #include "main.h"
+
+
+char *add_strings(char *n1, char *n2, char *r, int r_index);
+char *infinite_add(char *n1, char *n2, char *r, int size_r);
+
 /**
- * rev_string - rev arr
- * @n: int parameter
- * Return: 0
+ * add_strings - Adds the numbers stored in two strings.
+ * @n1: The string containing the first number to be added.
+ * @n2: The string containing the second number to be added.
+ * @r: The buffer to store the result.
+ * @r_index: The current index of the buffer.
+ *
+ * Return: If r can store the sum - a pointer to the result.
+ *         If r cannot store the sum - 0.
  */
-void rev_string(char *n)
+char *add_strings(char *n1, char *n2, char *r, int r_index)
 {
-	int q = 0;
-	int s = 0;
-	char temp;
+	int num, tens = 0;
 
-	while (*(n + q) != '\0')
+	for (; *n1 && *n2; n1--, n2--, r_index--)
 	{
-		q++;
+		num = (*n1 - '0') + (*n2 - '0');
+		num += tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
 	}
-	q--;
 
-	for (s = 0; s < q; s++, q--)
+	for (; *n1; n1--, r_index--)
 	{
-		temp = *(n + s);
-		*(n + s) = *(n + q);
-		*(n + q) = temp;
+		num = (*n1 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
 	}
+
+	for (; *n2; n2--, r_index--)
+	{
+		num = (*n2 - '0') + tens;
+		*(r + r_index) = (num % 10) + '0';
+		tens = num / 10;
+	}
+
+	if (tens && r_index >= 0)
+	{
+		*(r + r_index) = (tens % 10) + '0';
+		return (r + r_index);
+	}
+
+	else if (tens && r_index < 0)
+		return (0);
+
+	return (r + r_index + 1);
 }
 /**
- * infinite_add - add 2 num
- * @n1: 1st number to add
- * @n2: 2nd number to add
- * @r: pointer to buffer
- * @size_r: buffer size
- * Return: pointer to call function
+ * infinite_add - Adds two numbers.
+ * @n1: The first number to be added.
+ * @n2: The second number to be added.
+ * @r: The buffer to store the result.
+ * @size_r: The buffer size.
+ *
+ * Return: If r can store the sum - a pointer to the result.
+ *         If r cannot store the sum - 0.
  */
-
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int overflow = 0, q = 0, s = 0, digits = 0;
-	int val1 = 0, val2 = 0, temp_tot = 0;
+	int index, n1_len = 0, n2_len = 0;
 
-	while (*(n1 + q) != '\0')
-		q++;
-	while (*(n2 + s) != '\0')
-		s++;
-	q--;
-	s--;
-	if (s >= size_r || q >= size_r)
+	for (index = 0; *(n1 + index); index++)
+		n1_len++;
+
+	for (index = 0; *(n2 + index); index++)
+		n2_len++;
+
+	if (size_r <= n1_len + 1 || size_r <= n2_len + 1)
 		return (0);
-	while (s >= 0 || q >= 0 || overflow == 1)
-	{
-		if (q < 0)
-			val1 = 0;
-		else
-			val1 = *(n1 + q) - '0';
-		if (s < 0)
-			val2 = 0;
-		else
-			val2 = *(n2 + s) - '0';
-		temp_tot = val1 + val2 + overflow;
-		if (temp_tot >= 10)
-			overflow = 1;
-		else
-			overflow = 0;
-		if (digits >= (size_r - 1))
-			return (0);
-		*(r + digits) = (temp_tot % 10) + '0';
-		digits++;
-		s--;
-		q--;
-	}
-	if (digits == size_r)
-		return (0);
-	*(r + digits) = '\0';
-	rev_string(r);
-	return (r);
+
+	n1 += n1_len - 1;
+	n2 += n2_len - 1;
+	*(r + size_r) = '\0';
+
+	return (add_strings(n1, n2, r, --size_r));
 }
