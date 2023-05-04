@@ -2,7 +2,7 @@
 
 /**
  * print_number - print ints
- * @n: int parameter
+ * @n: int param
  * Return: 0
  */
 
