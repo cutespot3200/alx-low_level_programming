@@ -3,7 +3,6 @@
 
 /*
  * File: dog.h
- * Auth: Motunrayo I Sanni
  * Desc: Header file that defines a new type struct dog.
  */
 
