@@ -1,6 +1,13 @@
+#ifndef VARIADIC_FUNCTIONS_H
+#define VARIADIC_FUNCTIONS_H
+
+/*
+ * File: variadic_function.h
+ * Desc: Header file containing prototypes for all functions
+ *       used in the 0x0F-variadic_functions directory.
+ */
+
 #include <stdarg.h>
-#ifndef variadic_functions_h
-#define variadic_functions_h
 
 /**
  * struct printer - A new struct type defining a printer.
@@ -15,7 +22,6 @@ typedef struct printer
 
 } printer_t;
 
-int _putchar(char c);
 int sum_them_all(const unsigned int n, ...);
 void print_numbers(const char *separator, const unsigned int n, ...);
 void print_strings(const char *separator, const unsigned int n, ...);
